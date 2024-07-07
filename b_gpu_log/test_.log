@@ -1,0 +1,65 @@
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+You are using a CUDA device ('NVIDIA GeForce RTX 3090') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/1
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 1 processes
+----------------------------------------------------------------------------------------------------
+
+Missing logger folder: a_log/rawnet/
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name           | Type             | Params | Mode 
+------------------------------------------------------------
+0 | model          | Model            | 17.6 M | train
+1 | loss_criterion | CrossEntropyLoss | 0      | train
+------------------------------------------------------------
+17.6 M    Trainable params
+0         Non-trainable params
+17.6 M    Total params
+70.486    Total estimated model params size (MB)
+/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/utilities/data.py:78: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 256. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
+[W reducer.cpp:1300] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+Metric dev_eer improved. New best score: 0.632
+Metric dev_eer improved by 0.041 >= min_delta = 0.0. New best score: 0.591
+Metric dev_eer improved by 0.010 >= min_delta = 0.0. New best score: 0.581
+Metric dev_eer improved by 0.104 >= min_delta = 0.0. New best score: 0.477
+Metric dev_eer improved by 0.004 >= min_delta = 0.0. New best score: 0.473
+Metric dev_eer improved by 0.000 >= min_delta = 0.0. New best score: 0.473
+Metric dev_eer improved by 0.052 >= min_delta = 0.0. New best score: 0.421
+Metric dev_eer improved by 0.055 >= min_delta = 0.0. New best score: 0.366
+`Trainer.fit` stopped: `max_epochs=100` reached.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+Traceback (most recent call last):
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/connectors/data_connector.py", line 385, in _check_dataloader_iterable
+    iter(dataloader)  # type: ignore[call-overload]
+TypeError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data4/wuyikai/spoof5/framework/main.py", line 72, in <module>
+    trainer.test(
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/trainer.py", line 753, in test
+    return call._call_and_handle_interrupt(
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/call.py", line 43, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 105, in launch
+    return function(*args, **kwargs)
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/trainer.py", line 793, in _test_impl
+    results = self._run(model, ckpt_path=ckpt_path)
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/trainer.py", line 986, in _run
+    results = self._run_stage()
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/trainer.py", line 1023, in _run_stage
+    return self._evaluation_loop.run()
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/loops/utilities.py", line 182, in _decorator
+    return loop_run(self, *args, **kwargs)
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 110, in run
+    self.setup_data()
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/loops/evaluation_loop.py", line 179, in setup_data
+    _check_dataloader_iterable(dl, source, trainer_fn)
+  File "/data4/wuyikai/anaconda3/envs/spoof5/lib/python3.9/site-packages/lightning/pytorch/trainer/connectors/data_connector.py", line 401, in _check_dataloader_iterable
+    raise TypeError(
+TypeError: An invalid dataloader was returned from `asvspoof_dataModule.test_dataloader()`. Found None.
